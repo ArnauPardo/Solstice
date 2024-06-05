@@ -1,0 +1,83 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Ground
+  - Background
+  - Scene_Change
+  - Items
+  - SimpleEnemy
+  - Life
+  - Item
+  - Puntuacion
+  - Coin
+  - Parallax
+  - Boss
+  - Transicion
+  - Audio
+  - FallingIntoVoid
+  - Luces
+  - Checkpoint
+  - textoPartidaGuardada
+  - Musica
+  - Efectos
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - Player
+  - Water
+  - UI
+  - Background
+  - Ground
+  - Back_Decoration
+  - Back_Walls
+  - Mapa
+  - Enemies
+  - Item
+  - Npc
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 1385462393
+    locked: 0
+  - name: Back_Decor
+    uniqueID: 2738679451
+    locked: 0
+  - name: Npc
+    uniqueID: 493475845
+    locked: 0
+  - name: Item
+    uniqueID: 494598645
+    locked: 0
+  - name: Enemies
+    uniqueID: 3187810573
+    locked: 0
+  - name: Ground
+    uniqueID: 3709625389
+    locked: 0
+  - name: Player
+    uniqueID: 658445769
+    locked: 0
