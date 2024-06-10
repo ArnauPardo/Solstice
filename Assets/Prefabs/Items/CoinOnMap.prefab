@@ -182,7 +182,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b7b0d2ef0cd40542ab600d3273c5bb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coinValue: 3
+  id: 
+  coinValue: 2
   particulasExplosion: {fileID: 124917491541018690, guid: 2171755e60589b340b23f2a910812a91, type: 3}
 --- !u!95 &6193169955236369178
 Animator:

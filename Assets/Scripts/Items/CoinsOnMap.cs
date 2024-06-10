@@ -5,14 +5,22 @@ using UnityEngine.UI;
 
 public class CoinsOnMap : MonoBehaviour
 {
+    [SerializeField] private string id;
 
-    //Puntos que obtienes al coger una esfera de luz peque�a.
-    [Header("Caracter�sticas al tocar las esferas")]
+    [Header("Características al tocar las esferas")]
     [SerializeField] private int coinValue = 1;
     private GameObject puntuacion;
     [SerializeField] private GameObject particulasExplosion;
     protected GameObject particulasClon;
     AudioManager audioManager;
+
+    private void Awake()
+    {        
+        if (MonedasRecogidas.Instance.coins.Contains(id))
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Start()
     {
@@ -27,7 +35,8 @@ public class CoinsOnMap : MonoBehaviour
             audioManager.PlaySFX(audioManager.Coin);
             Settings.dinero += coinValue;
             puntuacion.GetComponent<Text>().text = "" + Settings.dinero;
-            particulasClon = (GameObject)Instantiate(particulasExplosion, collision.gameObject.transform.position, Quaternion.identity);
+            particulasClon = Instantiate(particulasExplosion, collision.gameObject.transform.position, Quaternion.identity);
+            MonedasRecogidas.Instance.coins.Add(id);
 
             Destroy(particulasClon, 2.0f);
             Destroy(this.gameObject);

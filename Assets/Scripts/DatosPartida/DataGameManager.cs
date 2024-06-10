@@ -9,18 +9,17 @@ public class DataGameManager : MonoBehaviour
 
     private void Awake()
     {
+        MonedasRecogidas.Instance.LoadData(); // Cargamos los datos al inicio
+
         if (Instance == null)
         {
             Instance = this;
-        }else if (Instance != null)
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (Instance != null)
         {
             Destroy(gameObject);
         }
-    }
-
-    private void Start()
-    {
-        DontDestroyOnLoad(gameObject);
     }
 
     public void CurrentScene(string value)

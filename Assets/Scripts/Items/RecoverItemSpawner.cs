@@ -14,14 +14,12 @@ public class RecoverItemSpawner : MonoBehaviour
 
     private Rigidbody2D rb;
     private CapsuleCollider2D capsuleCollider2D;
-    private CombatCC combatCC;
     private PlayerHealth playerHealth;
     AudioManager audioManager;
 
     void Start()
     {
         playerHealth = PlayerHealth.Instance;
-        combatCC = CombatCC.Instance;
         rb = GetComponent<Rigidbody2D>();
         capsuleCollider2D = GetComponent<CapsuleCollider2D>();
 
@@ -51,9 +49,30 @@ public class RecoverItemSpawner : MonoBehaviour
     {
         if (collision.collider.CompareTag(GameTags.player) && PlayerHealth.health < playerHealth.maxHealth)
         {
-            particulasClon = (GameObject)Instantiate(particulasExplosion, collision.gameObject.transform.position, Quaternion.identity);
-            audioManager.PlaySFX(audioManager.Heal);
-            combatCC.RecoverLife(gameObject);
+            RecoverLife(collision);
+        }
+    }
+
+    private void RecoverLife(Collision2D col)
+    {
+        PlayerHealth.health++;
+        particulasClon = (GameObject)Instantiate(particulasExplosion, col.gameObject.transform.position, Quaternion.identity);
+        audioManager.PlaySFX(audioManager.Heal);
+        Destroy(gameObject);
+        for (int i = 0; i < playerHealth.hearts.Length; i++)
+        {
+            if (PlayerHealth.health > playerHealth.maxHealth)
+            {
+                PlayerHealth.health = playerHealth.maxHealth;
+            }
+            else
+            {
+                if (i < PlayerHealth.health)
+                {
+
+                    playerHealth.UpdateHeartsUI();
+                }
+            }
         }
     }
 }

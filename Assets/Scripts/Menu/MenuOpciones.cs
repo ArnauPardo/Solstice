@@ -93,6 +93,7 @@ public class MenuOpciones : MonoBehaviour
         PlayerPrefs.SetInt(GameTags.currentHealth, PlayerPrefs.GetInt(GameTags.savedHealth));
         Settings.dinero = PlayerPrefs.GetInt(GameTags.savedMoney);
         PlayerPrefs.SetString(GameTags.lastScene, SceneManager.GetActiveScene().name);
+        CurasRecogidas.Instance.ClearData();
         SceneManager.LoadScene(PlayerPrefs.GetString(GameTags.savedScene));
         audioManager.Nivel1();
 
@@ -102,6 +103,8 @@ public class MenuOpciones : MonoBehaviour
     {
         audioManager.PararMusica();
         PlayerPrefs.DeleteAll();
+        MonedasRecogidas.Instance.ClearData();
+        CurasRecogidas.Instance.ClearData();
         Settings.newGame = true;
         PlayerPrefs.SetInt(GameTags.maxHearths, 5);
         PlayerPrefs.SetInt(GameTags.currentMoney, 0);

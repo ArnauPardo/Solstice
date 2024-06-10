@@ -45,7 +45,6 @@ public class CombatCC : MonoBehaviour
     private Animator anim;
     private PlayerHealth playerHealth;
     AudioManager audioManager;
-    [SerializeField] private GameObject particulasCurar;
     [SerializeField] private GameObject particulasAtacar;
     protected GameObject particulasClon;
 
@@ -89,6 +88,8 @@ public class CombatCC : MonoBehaviour
             DataGameManager.Instance.CurrentPosition(transform.position.x, transform.position.y, transform.position.z);
             DataGameManager.Instance.CurrentHearths(PlayerHealth.health);
             DataGameManager.Instance.CurrentMoney(Settings.dinero);
+            MonedasRecogidas.Instance.SaveData(); //Guardamos los ids de las monedas ya recogidas
+            CurasRecogidas.Instance.ClearData(); //Borramos los objetos de la lista para que vuelvan a aparecer
 
             StartCoroutine(TextoPartidaGuardada());
         }
@@ -196,39 +197,10 @@ public class CombatCC : MonoBehaviour
             pcForSaveGame = GetComponent<PlayerControl>();
         }
 
-        //Contacto con objeto de curacion
-        if (collision.CompareTag(GameTags.lifeItem) && PlayerHealth.health < playerHealth.maxHealth)
-        {
-            particulasClon = (GameObject)Instantiate(particulasCurar, collision.gameObject.transform.position, Quaternion.identity);
-            audioManager.PlaySFX(audioManager.Heal);
-            RecoverLife(collision.gameObject);
-        }
-
         //Detectamos el collider que hay al caer al vacío
         if (collision.CompareTag(GameTags.fallingIntoVoid)) //Vuelve al ultimo sitio donde ha saltado el jugador cuando cae al vacio
         {
             StartCoroutine(FallingIntoVoid());
-        }
-    }
-
-    public void RecoverLife(GameObject item)
-    {
-        PlayerHealth.health++;
-        Destroy(item);
-        for (int i = 0; i < playerHealth.hearts.Length; i++)
-        {
-            if (PlayerHealth.health > playerHealth.maxHealth)
-            {
-                PlayerHealth.health = playerHealth.maxHealth;
-            }
-            else
-            {
-                if (i < PlayerHealth.health)
-                {
-                    
-                    playerHealth.UpdateHeartsUI();
-                }
-            }
         }
     }
     private IEnumerator FallingIntoVoid()
