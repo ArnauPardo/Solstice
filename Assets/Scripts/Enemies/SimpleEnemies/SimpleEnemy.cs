@@ -5,7 +5,10 @@ using UnityEngine;
 public class SimpleEnemy : MonoBehaviour
 {
 
-    [Header("Estad�sticas")]
+    [Header("ID")]
+    [SerializeField] private string id;
+
+    [Header("Estadisticas")]
     [SerializeField] private float vida;
     [SerializeField] private int damage;
 
@@ -20,7 +23,7 @@ public class SimpleEnemy : MonoBehaviour
     public Transform rightPoint;
     public Transform leftPoint;
 
-    [Header("Recibir Da�o")]
+    [Header("Recibir Dano")]
     [SerializeField] private bool isInvulnerable = false;
     [SerializeField] private AnimationClip takeDmgAnim;
 
@@ -44,6 +47,11 @@ public class SimpleEnemy : MonoBehaviour
         anim = GetComponent<Animator>();
         capsuleCollider = GetComponent<CapsuleCollider2D>();
         audioManager = GameObject.FindGameObjectWithTag(GameTags.audio).GetComponent<AudioManager>();
+
+        if (EnemiesKilled.Instance.enemies.Contains(id))
+        {
+            Destroy(gameObject);
+        }
     }
 
     void Update()
@@ -107,15 +115,13 @@ public class SimpleEnemy : MonoBehaviour
             vida -= damage;
 
             if (vida <= 0)
-            {   
-                audioManager.PlaySFX(audioManager.slimeDeath);             
+            {                               
                 StartCoroutine(Dead());
             }
 
             //Esta condici�n tiene que ir despu�s de if (vida <= 0), sino la animaci�n de muerte no se realiza
             if (!isDead)
-            {
-                audioManager.PlaySFX(audioManager.slimeDamage);
+            {                
                 StartCoroutine(TakeDmgAnim());
             }
         }
@@ -123,9 +129,11 @@ public class SimpleEnemy : MonoBehaviour
 
     private IEnumerator Dead()
     {
+        audioManager.PlaySFX(audioManager.slimeDeath);
         capsuleCollider.isTrigger = true;
         isDead = true;
         anim.SetTrigger(GameTags.seDeath);
+        EnemiesKilled.Instance.enemies.Add(id);
         yield return new WaitForSeconds(muerte.length); //muerte.length es la duraci�n de la animaci�n de morir
         CoinGenerator();
         Destroy(objetoPadre); //Destruyo el objeto "objetoPadre" que contiene al enemigo. Es para optimizaci�n del proyecto
@@ -133,7 +141,7 @@ public class SimpleEnemy : MonoBehaviour
 
     private IEnumerator TakeDmgAnim() //Invulnerabilidad del enemigo cuando ha recibido un golpe y est� realizando la animacion
     {
-        
+        audioManager.PlaySFX(audioManager.slimeDamage);
         anim.SetTrigger(GameTags.seTakeDmg);
         isInvulnerable = true;
         yield return new WaitForSeconds(takeDmgAnim.length + 0.2f);

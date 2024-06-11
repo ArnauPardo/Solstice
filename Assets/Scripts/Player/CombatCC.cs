@@ -50,7 +50,16 @@ public class CombatCC : MonoBehaviour
 
     private void Start()
     {        
-        Instance = this;
+        Instance = this; //Inicializamos instancia para poder acceder al código desde otros scrpits
+        AddComponents();
+        HideSaveText();
+
+        Physics2D.IgnoreLayerCollision(3, 11, false); //Devolvemos la colisiones entre jugador y enemigos. Si no lo hacemos, se buggea muchas veces
+        lastSafePosition = transform.position; //Guardamos posicion a la que vuelve el jugador al caer al vacio
+    }
+
+    private void AddComponents()
+    {
         rb = GetComponent<Rigidbody2D>();
         capsuleCollider = GetComponent<CapsuleCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -58,10 +67,10 @@ public class CombatCC : MonoBehaviour
         pc = GetComponent<PlayerControl>();
         playerHealth = GetComponent<PlayerHealth>();
         audioManager = GameObject.FindGameObjectWithTag(GameTags.audio).GetComponent<AudioManager>();
-        Physics2D.IgnoreLayerCollision(3, 11, false);
+    }
 
-        lastSafePosition = transform.position;
-
+    private void HideSaveText()
+    {
         textoPartidaGuardada = GameObject.FindGameObjectWithTag(GameTags.textoPartidaGuardada);
         if (textoPartidaGuardada != null)
         {
@@ -84,13 +93,7 @@ public class CombatCC : MonoBehaviour
         //Guardar partida
         if (pcForSaveGame != null && Input.GetKeyDown(KeyCode.X))
         {
-            DataGameManager.Instance.CurrentScene(SceneManager.GetActiveScene().name);
-            DataGameManager.Instance.CurrentPosition(transform.position.x, transform.position.y, transform.position.z);
-            DataGameManager.Instance.CurrentHearths(PlayerHealth.health);
-            DataGameManager.Instance.CurrentMoney(Settings.dinero);
-            MonedasRecogidas.Instance.SaveData(); //Guardamos los ids de las monedas ya recogidas
-            CurasRecogidas.Instance.ClearData(); //Borramos los objetos de la lista para que vuelvan a aparecer
-
+            SaveData();
             StartCoroutine(TextoPartidaGuardada());
         }
     }
@@ -124,30 +127,6 @@ public class CombatCC : MonoBehaviour
         }
     }
 
-    private void Hit() //Lo usamos como evento en la animaci�n de atacar
-    {
-        //Detecto los colliders alrededor del ataque
-        Collider2D[] objects = Physics2D.OverlapCircleAll(radioAttack.position, radio);
-
-        //Si detecta un enemigo, le har� da�o
-        foreach (Collider2D col in objects)
-        {
-
-            //Cuando tengamos enemigos, est� ser� la forma de hacer el da�o
-            if (col.CompareTag(GameTags.simpleEnemy))
-            {
-                particulasClon = (GameObject)Instantiate(particulasAtacar, col.gameObject.transform.position, Quaternion.identity);
-                col.transform.GetComponent<SimpleEnemy>().GetDamage(damage);
-            }
-
-            if (col.CompareTag(GameTags.boss))
-            {
-                particulasClon = (GameObject)Instantiate(particulasAtacar, col.gameObject.transform.position, Quaternion.identity);
-                col.transform.GetComponent<Boss>().TakeDamage(damage);
-            }
-        }
-    }
-
     private IEnumerator GameOver()
     {
         capsuleCollider.isTrigger = true;
@@ -161,32 +140,22 @@ public class CombatCC : MonoBehaviour
         SceneManager.LoadScene(GameTags.gameOverScene);
     }
 
-    public void TakeDamage(int damage, Vector2 position)
+    private void SaveData()
     {
-        PlayerHealth.health -= damage; 
-        playerHealth.UpdateHeartsUI();
-        anim.SetTrigger(GameTags.playerTakeDamageAnim);
-        StartCoroutine(LostControl()); //Tiempo durante el que el jugador no puede hacer nada
-        StartCoroutine(DisableCollisions()); //Ignoramos colisiones al recibir da�o durante el tiempo que queramos
-        pc.Rebound(position); //Genera un rebote hacia al lado opuesto de lo que chocamos
+        DataGameManager.Instance.CurrentScene(SceneManager.GetActiveScene().name);
+        DataGameManager.Instance.CurrentPosition(transform.position.x, transform.position.y, transform.position.z);
+        DataGameManager.Instance.CurrentHearths(PlayerHealth.health);
+        DataGameManager.Instance.CurrentMoney(Settings.dinero);
+        MonedasRecogidas.Instance.SaveData(); //Guardamos los ids de las monedas ya recogidas
+        CurasRecogidas.Instance.ClearData(); //Borramos las curaciones de la lista para que vuelvan a aparecer
+        EnemiesKilled.Instance.ClearData(); //Borramos los enemigos de la lista para que vuelvan a aparecer
     }
 
-
-    private IEnumerator LostControl()
+    private IEnumerator TextoPartidaGuardada()
     {
-        pc.canMove = false;
-        yield return new WaitForSeconds(medusa_dmg_Animation.length);
-        pc.canMove = true;
-    }
-
-    private IEnumerator DisableCollisions()
-    {
-        // Cuando vamos al inspector de un objeto, podemos seleccionar en que Layer est�
-        // Hacemos que no haya colision entre dos Layers durante el tiempo que queramos. 3 y 11 hacen referencia a esos Layers
-        // El valor "True", es que SI estamos ignorando la colisi�n, "False" NO la ignoramos
-        Physics2D.IgnoreLayerCollision(3, 11, true);
-        yield return new WaitForSeconds(medusa_dmg_Animation.length + 0.5f); //Testear y decidir si dar un poco m�s de tiempo de inmunidad
-        Physics2D.IgnoreLayerCollision(3, 11, false);
+        textoPartidaGuardada.SetActive(true);
+        yield return new WaitForSeconds(2f);
+        textoPartidaGuardada.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -228,16 +197,62 @@ public class CombatCC : MonoBehaviour
         }
     }
 
-    private IEnumerator TextoPartidaGuardada()
-    {
-        textoPartidaGuardada.SetActive(true);
-        yield return new WaitForSeconds(2f);
-        textoPartidaGuardada.SetActive(false);
-    }
-
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(radioAttack.position, radio);
     }
+
+    //Métodos que utilizo desde otros sitios (scripts o animaciones)
+    private void Hit() //Lo usamos como evento en la animaci�n de atacar
+    {
+        //Detecto los colliders alrededor del ataque
+        Collider2D[] objects = Physics2D.OverlapCircleAll(radioAttack.position, radio);
+
+        //Si detecta un enemigo, le har� da�o
+        foreach (Collider2D col in objects)
+        {
+
+            //Cuando tengamos enemigos, est� ser� la forma de hacer el da�o
+            if (col.CompareTag(GameTags.simpleEnemy))
+            {
+                particulasClon = (GameObject)Instantiate(particulasAtacar, col.gameObject.transform.position, Quaternion.identity);
+                col.transform.GetComponent<SimpleEnemy>().GetDamage(damage);
+            }
+
+            if (col.CompareTag(GameTags.boss))
+            {
+                particulasClon = (GameObject)Instantiate(particulasAtacar, col.gameObject.transform.position, Quaternion.identity);
+                col.transform.GetComponent<Boss>().TakeDamage(damage);
+            }
+        }
+    }
+
+    public void TakeDamage(int damage, Vector2 position)
+    {
+        PlayerHealth.health -= damage;
+        playerHealth.UpdateHeartsUI();
+        anim.SetTrigger(GameTags.playerTakeDamageAnim);
+        StartCoroutine(LostControl()); //Tiempo durante el que el jugador no puede hacer nada
+        StartCoroutine(DisableCollisions()); //Ignoramos colisiones al recibir da�o durante el tiempo que queramos
+        pc.Rebound(position); //Genera un rebote hacia al lado opuesto de lo que chocamos
+    }
+
+    private IEnumerator LostControl()
+    {
+        pc.canMove = false;
+        yield return new WaitForSeconds(medusa_dmg_Animation.length);
+        pc.canMove = true;
+    }
+
+    private IEnumerator DisableCollisions()
+    {
+        // Cuando vamos al inspector de un objeto, podemos seleccionar en que Layer est�
+        // Hacemos que no haya colision entre dos Layers durante el tiempo que queramos. 3 y 11 hacen referencia a esos Layers
+        // El valor "True", es que SI estamos ignorando la colisi�n, "False" NO la ignoramos
+        Physics2D.IgnoreLayerCollision(3, 11, true);
+        yield return new WaitForSeconds(medusa_dmg_Animation.length + 0.5f); //Testear y decidir si dar un poco m�s de tiempo de inmunidad
+        Physics2D.IgnoreLayerCollision(3, 11, false);
+    }
+
 }
