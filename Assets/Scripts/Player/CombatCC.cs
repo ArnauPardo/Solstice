@@ -142,9 +142,13 @@ public class CombatCC : MonoBehaviour
 
     private void SaveData()
     {
+        //Recuperamos todos los puntos de vida al guardar partida antes de guardar la vida que tenemos
+        PlayerHealth.health = playerHealth.maxHealth;
+        playerHealth.UpdateHeartsUI();
+
         DataGameManager.Instance.CurrentScene(SceneManager.GetActiveScene().name);
         DataGameManager.Instance.CurrentPosition(transform.position.x, transform.position.y, transform.position.z);
-        DataGameManager.Instance.CurrentHearths(PlayerHealth.health);
+        DataGameManager.Instance.CurrentHearths(PlayerHealth.health);//Guardamos la vida despues de actualizarla, siempre deberiamos tener 5 de vida al continuar partida
         DataGameManager.Instance.CurrentMoney(Settings.dinero);
         MonedasRecogidas.Instance.SaveData(); //Guardamos los ids de las monedas ya recogidas
         CurasRecogidas.Instance.ClearData(); //Borramos las curaciones de la lista para que vuelvan a aparecer
