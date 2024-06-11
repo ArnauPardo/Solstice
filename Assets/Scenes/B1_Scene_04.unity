@@ -26804,6 +26804,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 6172e10337962654d829a3455bde6bbf, type: 2}
     - target: {fileID: 1117512410346669920, guid: 1e9d12dbd6b62db488fe9342d92639a9, type: 3}
+      propertyPath: flechaSalida
+      value: 
+      objectReference: {fileID: 1278817218}
+    - target: {fileID: 1117512410346669920, guid: 1e9d12dbd6b62db488fe9342d92639a9, type: 3}
+      propertyPath: flechaEntrada
+      value: 
+      objectReference: {fileID: 1278817219}
+    - target: {fileID: 1117512410346669920, guid: 1e9d12dbd6b62db488fe9342d92639a9, type: 3}
       propertyPath: changeSceneAnim
       value: 
       objectReference: {fileID: 7400000, guid: 3807e4a93a9d11f438695d675f2609b2, type: 2}
@@ -26896,6 +26904,16 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1e9d12dbd6b62db488fe9342d92639a9, type: 3}
+--- !u!1 &1278817218 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6496329992487136897, guid: 1e9d12dbd6b62db488fe9342d92639a9, type: 3}
+  m_PrefabInstance: {fileID: 1278817217}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1278817219 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8781153104834895065, guid: 1e9d12dbd6b62db488fe9342d92639a9, type: 3}
+  m_PrefabInstance: {fileID: 1278817217}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1306434389
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -17,11 +17,16 @@ public class LevelChanger : MonoBehaviour
     [SerializeField] private AnimationClip changeSceneAnim;
     private PlayerControl pc;
 
+    [Header("Indicador Minimapa")]
+    [SerializeField] private GameObject flechaEntrada;
+    [SerializeField] private GameObject flechaSalida;
 
     private void Awake()
     {        
         if (connection == LevelConnection.ActiveConnection)
         {
+            flechaSalida.SetActive(false);
+            flechaEntrada.SetActive(true);
             pc = FindObjectOfType<PlayerControl>();
             pc.transform.position = spawnPoint.position;
             pc.transform.rotation = spawnPoint.rotation;
