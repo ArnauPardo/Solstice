@@ -313,7 +313,7 @@ MonoBehaviour:
   StageTransition: {fileID: 0}
   medusaAttack: {fileID: 8300000, guid: f9a6dead0be87e4469f2301f631cd095, type: 3}
   medusaJump: {fileID: 8300000, guid: f0d9e93be244835428d3090532fa62e2, type: 3}
-  medusaDamage: {fileID: 0}
+  medusaDamage: {fileID: 8300000, guid: e8497e9ac60fdad4a9ed04e31ed39f35, type: 3}
   medusaDeath: {fileID: 0}
   slimeDamage: {fileID: 8300000, guid: f19cad4ca96b0f74594fd67455c0a5e2, type: 3}
   slimeDeath: {fileID: 8300000, guid: 1d889d70d8085554ea36d57177c4d0f3, type: 3}
