@@ -19,6 +19,9 @@ public class CombatCC : MonoBehaviour
     [SerializeField] private float timeBetweenAttacks;
     [SerializeField] private float timeNextAttack;
 
+    [SerializeField] private GameObject attackEffect;
+    protected GameObject attackEffectClon;
+
     [Header("Recibir da�o")]
     //[SerializeField] private GameObject[] hearts;
     [SerializeField] private Sprite emptyLife;
@@ -221,12 +224,16 @@ public class CombatCC : MonoBehaviour
             if (col.CompareTag(GameTags.simpleEnemy))
             {
                 particulasClon = (GameObject)Instantiate(particulasAtacar, col.gameObject.transform.position, Quaternion.identity);
+                attackEffectClon = (GameObject)Instantiate(attackEffect, col.gameObject.transform.position, Quaternion.identity);
+                audioManager.PlaySFX(audioManager.medusaDamage);
                 col.transform.GetComponent<SimpleEnemy>().GetDamage(damage);
             }
 
             if (col.CompareTag(GameTags.boss))
             {
                 particulasClon = (GameObject)Instantiate(particulasAtacar, col.gameObject.transform.position, Quaternion.identity);
+                attackEffectClon = (GameObject)Instantiate(attackEffect, col.gameObject.transform.position, Quaternion.identity);
+                audioManager.PlaySFX(audioManager.medusaDamage);
                 col.transform.GetComponent<Boss>().TakeDamage(damage);
             }
         }

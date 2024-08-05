@@ -5113,6 +5113,7 @@ MonoBehaviour:
   damage: 5
   timeBetweenAttacks: 0.3
   timeNextAttack: 0
+  attackEffect: {fileID: 9197649163528659690, guid: 063e83ea34946a0429b171b0bb6be556, type: 3}
   emptyLife: {fileID: 21300000, guid: 2ed5bcbb98417374ca2a75d5eefb7563, type: 3}
   fullLife: {fileID: 21300000, guid: 9af1c28971f4b364baf92b1540bbc147, type: 3}
   medusa_dmg_Animation: {fileID: 7400000, guid: 4ea7fb54f6565ff4c80bde4fb216d82d, type: 2}

@@ -109,7 +109,6 @@ public class SimpleEnemy : MonoBehaviour
 
     public void GetDamage(int damage)
     {
-
         if (!isInvulnerable)
         {
             vida -= damage;
