@@ -57,7 +57,7 @@ public class SimpleEnemy : MonoBehaviour
     void Update()
     {
         //Para que se quede quito al morir
-        if (!isDead)
+        if (!isDead && !isInvulnerable)
         {
             Movement();
         }
