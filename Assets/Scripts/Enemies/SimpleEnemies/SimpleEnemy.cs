@@ -41,12 +41,14 @@ public class SimpleEnemy : MonoBehaviour
     //Animaciones
     private Animator anim;
     AudioManager audioManager;
+    private SpriteRenderer sr;
 
     private void Awake()
     {
         anim = GetComponent<Animator>();
         capsuleCollider = GetComponent<CapsuleCollider2D>();
         audioManager = GameObject.FindGameObjectWithTag(GameTags.audio).GetComponent<AudioManager>();
+        sr = GetComponent<SpriteRenderer>();
 
         if (EnemiesKilled.Instance.enemies.Contains(id))
         {
@@ -60,6 +62,10 @@ public class SimpleEnemy : MonoBehaviour
         if (!isDead && !isInvulnerable)
         {
             Movement();
+            if (gameObject.CompareTag("GhostEnemy"))
+            {
+                Disappear();
+            }
         }
     }
     
@@ -105,6 +111,11 @@ public class SimpleEnemy : MonoBehaviour
                 isMoving = true;
             }
         }
+    }
+
+    private void Disappear()
+    {
+
     }
 
     public void GetDamage(int damage)

@@ -23,6 +23,7 @@ TagManager:
   - textoPartidaGuardada
   - Musica
   - Efectos
+  - GhostEnemy
   layers:
   - Default
   - TransparentFX
