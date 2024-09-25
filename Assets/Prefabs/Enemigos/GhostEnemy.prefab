@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4260515667441261941}
   - component: {fileID: 5747970163951252567}
   - component: {fileID: 4746974384875942001}
-  - component: {fileID: 1794681909905361911}
   - component: {fileID: 8700532962550107391}
   m_Layer: 11
   m_Name: Enemy
@@ -122,35 +121,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0.05357051, y: -0.35294235}
   m_Size: {x: 0.5149636, y: 0.8752725}
   m_Direction: 0
---- !u!114 &1794681909905361911
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7201591872285329463}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5de2c8a4dc2c6b4286d89fcc5af4cb3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  id: 
-  vida: 10
-  damage: 1
-  speed: 1.5
-  lookingRight: 1
-  isMoving: 1
-  idleTime: 1.3
-  timer: 0
-  rightPoint: {fileID: 0}
-  leftPoint: {fileID: 0}
-  isInvulnerable: 0
-  takeDmgAnim: {fileID: 7400000, guid: 371771ec1331a4e4086092ea0870d48a, type: 2}
-  objetoPadre: {fileID: 8570125064682198711}
-  muerte: {fileID: 7400000, guid: 32b7476b0b4360f4b9c0aa47455fa72e, type: 2}
-  items:
-  - {fileID: 8002684499516248426, guid: 0d0c21c07263c2247b1e4fc6d2e2640c, type: 3}
-  - {fileID: 7291026253446597186, guid: e1ed0a33bedca2d4b80ef27846a89b21, type: 3}
 --- !u!95 &8700532962550107391
 Animator:
   serializedVersion: 5

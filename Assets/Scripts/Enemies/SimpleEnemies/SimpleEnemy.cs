@@ -38,6 +38,13 @@ public class SimpleEnemy : MonoBehaviour
     private int minCoins = 0;
     private int maxCoins = 2;
 
+    [Header("Efecto invisiblidad")]
+    [SerializeField] private int valorAleatorio; //El pj no siempre se hace invisible, tiene un 50% de probabilidades cada X segundos. Esta variable guarda el valor
+    [SerializeField] private float invChanceTimer; //Segundos que hay que esperar antes de volver a intentar si se puede hacer invisible
+    [SerializeField] private float invisibleTime; //Tiempo que está invisible
+    [SerializeField] private float colorAlfa;
+    [SerializeField] private bool canDisappear = true;
+
     //Animaciones
     private Animator anim;
     AudioManager audioManager;
@@ -48,11 +55,22 @@ public class SimpleEnemy : MonoBehaviour
         anim = GetComponent<Animator>();
         capsuleCollider = GetComponent<CapsuleCollider2D>();
         audioManager = GameObject.FindGameObjectWithTag(GameTags.audio).GetComponent<AudioManager>();
-        sr = GetComponent<SpriteRenderer>();
 
+        //SpriteRenderer y guardar el color para que los "GhostEnemy" puedan volverse invisibles
+        canDisappear = true;
+        sr = GetComponent<SpriteRenderer>();
+        Color c = sr.material.color;
+        colorAlfa = c.a;
+
+        //Condicional para que no hagan respawn los enemigos derrotados
         if (EnemiesKilled.Instance.enemies.Contains(id))
         {
             Destroy(gameObject);
+        }
+
+        if (gameObject.CompareTag("GhostEnemy"))
+        {
+            StartCoroutine(DisappearRoutine());
         }
     }
 
@@ -61,11 +79,7 @@ public class SimpleEnemy : MonoBehaviour
         //Para que se quede quito al morir
         if (!isDead && !isInvulnerable)
         {
-            Movement();
-            if (gameObject.CompareTag("GhostEnemy"))
-            {
-                Disappear();
-            }
+            Movement();            
         }
     }
     
@@ -113,9 +127,51 @@ public class SimpleEnemy : MonoBehaviour
         }
     }
 
+    private IEnumerator DisappearRoutine()
+    {
+        while (true) // Repetir indefinidamente
+        {
+            if (canDisappear) // Solo intentar desaparecer si puede
+            {
+                Disappear();
+            }
+            yield return new WaitForSeconds(invChanceTimer); // Espera el tiempo antes de intentar de nuevo
+        }
+    }
+
     private void Disappear()
     {
+        int invisibleProbabilityTime = Random.Range(1, 3);
+        valorAleatorio = invisibleProbabilityTime;
 
+        if (invisibleProbabilityTime == 1)
+        {
+            canDisappear = false;
+            StartCoroutine(InvisibleEffect());
+        }
+    }
+
+    private IEnumerator InvisibleEffect()
+    {
+        for (float f = colorAlfa; f >= 0f; f -= 0.02f)
+        {
+            Color a = sr.material.color;
+            a.a = f;
+            sr.material.color = a;
+            yield return (0.05f);
+        }
+
+        yield return new WaitForSeconds(invisibleTime);
+
+        for (float f = 0; f <= 1f; f += 0.02f)
+        {
+            Color e = sr.material.color;
+            e.a = f;
+            sr.material.color = e;
+            yield return (0.05f);
+        }
+
+        canDisappear = true;
     }
 
     public void GetDamage(int damage)

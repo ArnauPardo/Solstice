@@ -220,13 +220,21 @@ public class CombatCC : MonoBehaviour
         foreach (Collider2D col in objects)
         {
 
-            //Cuando tengamos enemigos, est� ser� la forma de hacer el da�o
+            //Cuando tengamos enemigos, esta sera la forma de hacer el dano
             if (col.CompareTag(GameTags.simpleEnemy))
             {
                 particulasClon = (GameObject)Instantiate(particulasAtacar, col.gameObject.transform.position, Quaternion.identity);
                 attackEffectClon = (GameObject)Instantiate(attackEffect, col.gameObject.transform.position, Quaternion.identity);
                 audioManager.PlaySFX(audioManager.medusaDamage);
                 col.transform.GetComponent<SimpleEnemy>().GetDamage(damage);
+            }
+
+            if (col.CompareTag("GhostEnemy"))
+            {
+                particulasClon = (GameObject)Instantiate(particulasAtacar, col.gameObject.transform.position, Quaternion.identity);
+                attackEffectClon = (GameObject)Instantiate(attackEffect, col.gameObject.transform.position, Quaternion.identity);
+                audioManager.PlaySFX(audioManager.medusaDamage);
+                col.transform.GetComponent<GhostEnemy>().GetDamage(damage);
             }
 
             if (col.CompareTag(GameTags.boss))
