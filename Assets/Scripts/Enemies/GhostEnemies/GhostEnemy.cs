@@ -74,7 +74,7 @@ public class GhostEnemy : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if (gameObject.CompareTag("GhostEnemy"))
+        if (gameObject.CompareTag(GameTags.ghostEnemy))
         {
             StartCoroutine(DisappearRoutine());
         }

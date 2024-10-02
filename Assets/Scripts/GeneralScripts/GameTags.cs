@@ -50,6 +50,7 @@ public class GameTags : MonoBehaviour
     public static string ground = "Ground";
     public static string player = "Player";
     public static string simpleEnemy = "SimpleEnemy";
+    public static string ghostEnemy = "GhostEnemy";
     public static string boss = "Boss";
     public static string lifeItem = "Life";
     public static string puntuacionText = "Puntuacion";

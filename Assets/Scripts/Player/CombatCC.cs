@@ -229,7 +229,7 @@ public class CombatCC : MonoBehaviour
                 col.transform.GetComponent<SimpleEnemy>().GetDamage(damage);
             }
 
-            if (col.CompareTag("GhostEnemy"))
+            if (col.CompareTag(GameTags.ghostEnemy))
             {
                 particulasClon = (GameObject)Instantiate(particulasAtacar, col.gameObject.transform.position, Quaternion.identity);
                 attackEffectClon = (GameObject)Instantiate(attackEffect, col.gameObject.transform.position, Quaternion.identity);
