@@ -14,7 +14,11 @@ public class Boss : MonoBehaviour
 
     [SerializeField] private AnimationClip takeDamageClip; //Para hacer el boss invulnerable mientras realiza la animaci�n de recibir da�o
 
-    [Header("Ataque B�sico")]
+    private bool isWeak;
+    private Coroutine weaknessCoroutine;
+    [SerializeField] private float weaknessTime;
+
+    [Header("Ataque Basico")]
     [SerializeField] private int contactDamage;
     [SerializeField] private Transform radioAttack;
     [SerializeField] private float radio;
@@ -51,18 +55,28 @@ public class Boss : MonoBehaviour
         float distanciaJugador = Vector2.Distance(transform.position, player.position);
         anim.SetFloat(GameTags.distanciaJugador, distanciaJugador);
 
+        anim.SetBool("isWeak", isWeak);
+
         if (anim.GetBool(GameTags.isEnraged))
         {
             if (!usingHability)
-            {                
+            {
                 anim.SetFloat(GameTags.habilityCast, actualTimeCast);
-                actualTimeCast -= Time.deltaTime;               
+                actualTimeCast -= Time.deltaTime;
             }
         }
     }
 
     public void TakeDamage(int damage)
     {
+        isWeak = false;
+        //Detenemos la corutina Weakness si está en ejecución
+        if (weaknessCoroutine != null)
+        {
+            StopCoroutine(weaknessCoroutine);
+            weaknessCoroutine = null; //Limpiamos la referencia
+        }
+
         if (!isInvulnerable)
         {
             bossHealth -= damage;
@@ -140,6 +154,11 @@ public class Boss : MonoBehaviour
     private void Attack()  //Podemos decidir si el jefe es invulnerable cuando realiza el ataque b�sico, depender� de como sea la animaci�n.
     {
         StartCoroutine(TimeBeforeAttack());
+        //Iniciamos la corutina Weakness solo si no está en ejecución
+        if (weaknessCoroutine == null)
+        {
+            weaknessCoroutine = StartCoroutine(Weakness());
+        }
     }
 
     private IEnumerator TimeBeforeAttack()
@@ -159,6 +178,7 @@ public class Boss : MonoBehaviour
                 if (player.position.x > transform.position.x)
                 {
                     col.transform.GetComponent<CombatCC>().TakeDamage(damageAttack, -radioAttack.position);
+                    
                 }
                 else if (player.position.x < transform.position.x)
                 {
@@ -166,6 +186,20 @@ public class Boss : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void StartWeakness()
+    {
+        StartCoroutine(Weakness());
+    }
+
+    private IEnumerator Weakness()
+    {
+        isWeak = true;
+        yield return new WaitForSeconds(weaknessTime);
+        isWeak = false;
+
+        weaknessCoroutine = null; //Limpiamos la referencia cuando la corutina termina
     }
 
     public void Hability() 
@@ -176,7 +210,7 @@ public class Boss : MonoBehaviour
         //Animaci�n habilidad
         currentHabilityTime = habilityTime;
 
-        //Llamamos al m�todo SpawnMasaLuminosa repetidamente cada 0.5 segundos
+        //Llamamos al metodo SpawnMasaLuminosa repetidamente cada 0.5 segundos
         InvokeRepeating("SpawnMasaLuminosa", 0f, 0.5f);
     }
 
