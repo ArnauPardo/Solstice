@@ -49,9 +49,10 @@ public class GameTags : MonoBehaviour
     //Tags
     public static string ground = "Ground";
     public static string player = "Player";
-    public static string simpleEnemy = "SimpleEnemy";
-    public static string ghostEnemy = "GhostEnemy";
-    public static string boss = "Boss";
+    public const string simpleEnemy = "SimpleEnemy";
+    public const string ghostEnemy = "GhostEnemy";
+    public const string boss = "Boss";
+    public const string weaknessPoint = "WeaknessPoint";
     public static string lifeItem = "Life";
     public static string puntuacionText = "Puntuacion";
     public static string coinFloat = "Coin";

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerControl : MonoBehaviour
 {
@@ -57,6 +58,12 @@ public class PlayerControl : MonoBehaviour
 
     void Update()
     {
+        //Quitar este input al terminar el juego
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            StartCoroutine(ChangeScene());
+        }
+
         if (canApplyForce)
         {
             MovementForces();
@@ -227,4 +234,13 @@ public class PlayerControl : MonoBehaviour
         dust.Stop();
     }
 
+    private IEnumerator ChangeScene()
+    {
+        //Se puede acceder al RigidBody del player y poner su velocidad en 0. También acceder al animator de Player y ponerlo en idle, pero creo que queda mejor así
+        canMove = false;
+        anim.SetTrigger(GameTags.changingScene);
+        PlayerPrefs.SetString(GameTags.lastScene, SceneManager.GetActiveScene().name);
+        yield return new WaitForSeconds(0.2f);
+        SceneManager.LoadScene("B1_Scene_07");
+    }
 }

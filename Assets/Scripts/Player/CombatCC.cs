@@ -218,33 +218,39 @@ public class CombatCC : MonoBehaviour
         //Detecto los colliders alrededor del ataque
         Collider2D[] objects = Physics2D.OverlapCircleAll(radioAttack.position, radio);
 
-        //Si detecta un enemigo, le har� da�o
         foreach (Collider2D col in objects)
         {
-
-            //Cuando tengamos enemigos, esta sera la forma de hacer el dano
-            if (col.CompareTag(GameTags.simpleEnemy))
+            switch (col.tag)
             {
-                particulasClon = (GameObject)Instantiate(particulasAtacar, col.gameObject.transform.position, Quaternion.identity);
-                attackEffectClon = (GameObject)Instantiate(attackEffect, col.gameObject.transform.position, Quaternion.identity);
-                audioManager.PlaySFX(audioManager.medusaDamage);
-                col.transform.GetComponent<SimpleEnemy>().GetDamage(damage);
-            }
+                case GameTags.simpleEnemy:
+                    particulasClon = (GameObject)Instantiate(particulasAtacar, col.gameObject.transform.position, Quaternion.identity);
+                    attackEffectClon = (GameObject)Instantiate(attackEffect, col.gameObject.transform.position, Quaternion.identity);
+                    audioManager.PlaySFX(audioManager.medusaDamage);
+                    col.transform.GetComponent<SimpleEnemy>().GetDamage(damage);
+                    break;
 
-            if (col.CompareTag(GameTags.ghostEnemy))
-            {
-                particulasClon = (GameObject)Instantiate(particulasAtacar, col.gameObject.transform.position, Quaternion.identity);
-                attackEffectClon = (GameObject)Instantiate(attackEffect, col.gameObject.transform.position, Quaternion.identity);
-                audioManager.PlaySFX(audioManager.medusaDamage);
-                col.transform.GetComponent<GhostEnemy>().GetDamage(damage);
-            }
+                case GameTags.ghostEnemy:
+                    particulasClon = (GameObject)Instantiate(particulasAtacar, col.gameObject.transform.position, Quaternion.identity);
+                    attackEffectClon = (GameObject)Instantiate(attackEffect, col.gameObject.transform.position, Quaternion.identity);
+                    audioManager.PlaySFX(audioManager.medusaDamage);
+                    col.transform.GetComponent<GhostEnemy>().GetDamage(damage);
+                    break;
 
-            if (col.CompareTag(GameTags.boss))
-            {
-                particulasClon = (GameObject)Instantiate(particulasAtacar, col.gameObject.transform.position, Quaternion.identity);
-                attackEffectClon = (GameObject)Instantiate(attackEffect, col.gameObject.transform.position, Quaternion.identity);
-                audioManager.PlaySFX(audioManager.medusaDamage);
-                pc.ApplyRecoil(recoilForce);
+                case GameTags.boss:                    
+                    audioManager.PlaySFX(audioManager.medusaDamage);
+                    pc.ApplyRecoil(recoilForce);
+                    break;
+
+                case GameTags.weaknessPoint:
+                    particulasClon = (GameObject)Instantiate(particulasAtacar, col.gameObject.transform.position, Quaternion.identity);
+                    attackEffectClon = (GameObject)Instantiate(attackEffect, col.gameObject.transform.position, Quaternion.identity);
+                    audioManager.PlaySFX(audioManager.medusaDamage);
+                    col.transform.GetComponentInParent<Boss>().TakeDamage(damage);
+                    break;
+
+                default:
+                    // Si necesitas manejar otros casos o no hacer nada, puedes hacerlo aquí.
+                    break;
             }
         }
     }

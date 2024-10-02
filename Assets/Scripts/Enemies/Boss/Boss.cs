@@ -153,7 +153,8 @@ public class Boss : MonoBehaviour
         }        
     }
 
-    private void Attack()  //Podemos decidir si el jefe es invulnerable cuando realiza el ataque b�sico, depender� de como sea la animaci�n.
+    //Attack se usa desde la animación
+    private void Attack()  //Podemos decidir si el jefe es invulnerable cuando realiza el ataque basico, dependera de como sea la animacion.
     {
         StartCoroutine(TimeBeforeAttack());
         //Iniciamos la corutina Weakness solo si no está en ejecución
@@ -204,17 +205,17 @@ public class Boss : MonoBehaviour
         usingHability = true;
         isInvulnerable = true;
         actualTimeCast = timeBeetwenHabilityCast;
-        //Animaci�n habilidad
+        //Animacion habilidad
         currentHabilityTime = habilityTime;
 
         //Llamamos al metodo SpawnMasaLuminosa repetidamente cada 0.5 segundos
         InvokeRepeating("SpawnMasaLuminosa", 0f, 0.5f);
     }
 
-    // Este m�todo ser� llamado repetidamente por InvokeRepeating
+    // Este metodo sera llamado repetidamente por InvokeRepeating
     private void SpawnMasaLuminosa()
     {
-        //Instanciamos objetos de masa luminosa en una posici�n aleatoria
+        //Instanciamos objetos de masa luminosa en una posicion aleatoria
         Instantiate(masaLuminosa, spawnPoints[Random.Range(0, spawnPoints.Length)].position, Quaternion.identity);
 
         //Restamos el tiempo transcurrido
