@@ -395,18 +395,6 @@ PrefabInstance:
       propertyPath: _MapaCamara
       value: 
       objectReference: {fileID: 651873423}
-    - target: {fileID: 827280078842279413, guid: 75f290c020aa37b438d7235cc4178313, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 10.699951
-      objectReference: {fileID: 0}
-    - target: {fileID: 827280078842279413, guid: 75f290c020aa37b438d7235cc4178313, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -11.300049
-      objectReference: {fileID: 0}
-    - target: {fileID: 6826015993235336044, guid: 75f290c020aa37b438d7235cc4178313, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -27
-      objectReference: {fileID: 0}
     - target: {fileID: 7265052357757268468, guid: 75f290c020aa37b438d7235cc4178313, type: 3}
       propertyPath: m_Name
       value: UI

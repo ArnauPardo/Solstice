@@ -14,6 +14,8 @@ public class Boss : MonoBehaviour
 
     [SerializeField] private AnimationClip takeDamageClip; //Para hacer el boss invulnerable mientras realiza la animaci�n de recibir da�o
 
+
+    //Variables momento débil del jefe
     private bool isWeak;
     private Coroutine weaknessCoroutine;
     [SerializeField] private float weaknessTime;
@@ -186,11 +188,6 @@ public class Boss : MonoBehaviour
                 }
             }
         }
-    }
-
-    public void StartWeakness()
-    {
-        StartCoroutine(Weakness());
     }
 
     private IEnumerator Weakness()

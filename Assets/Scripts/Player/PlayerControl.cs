@@ -25,8 +25,9 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private float shortJump;
     [SerializeField] private float longJump;
 
-    [Header("Recibir da�o")]
+    [Header("Recibir dano")]
     public bool canMove = true;
+    public bool canApplyForce = true;
     [SerializeField] private Vector2 reboundSpeed;
     [SerializeField] private Vector2 reboundSpeedJumping;
 
@@ -56,7 +57,10 @@ public class PlayerControl : MonoBehaviour
 
     void Update()
     {
-        MovementForces();
+        if (canApplyForce)
+        {
+            MovementForces();
+        }
     }
 
     private void FixedUpdate()
@@ -176,6 +180,34 @@ public class PlayerControl : MonoBehaviour
     {
         rb.velocity = new Vector2(rb.velocity.x, 0f);
         rb.velocity = new Vector2(-reboundSpeed.x * puntoGolpe.x, reboundSpeed.y); //Hay un error, si en el mismo momento que contactas con el enemigo, el jugador salta, salta mucho m�s alto de lo normal     
+    }
+
+    //Este método hará que el jugador retroceda un poco en función de hacia dónde esté mirando.
+    public void ApplyRecoil(float recoilForce)
+    {
+        StartCoroutine(Recoil(recoilForce));
+    }
+
+    private IEnumerator Recoil(float force)
+    {
+        canMove = false;
+        canApplyForce = false;
+        // Determinamos la dirección del retroceso. Si la rotación en Y es 180, el jugador mira a la izquierda.
+        float direction = (transform.rotation.eulerAngles.y == 180) ? 1f : -1f;
+
+        // Reiniciar la velocidad antes de aplicar el retroceso
+        rb.velocity = new Vector2(0, rb.velocity.y); // Mantener la velocidad Y para permitir el movimiento normal de gravedad
+
+        // Aplicar la fuerza en la dirección opuesta a donde está mirando el jugador
+        rb.AddForce(new Vector2(force * direction, 0), ForceMode2D.Impulse);
+
+        // Debug para verificar la dirección
+        //Debug.Log($"Applying recoil: direction = {direction}, force = {force * direction}");
+
+        yield return new WaitForSeconds(0.2f);
+
+        canMove = true;
+        canApplyForce = true;
     }
 
     private void OnDrawGizmos()

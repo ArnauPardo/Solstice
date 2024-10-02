@@ -5082,6 +5082,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dust: {fileID: 2871891778530886713}
+  recoilForce: 5
   movementSpeed: 5
   jumpForce: 330
   jumpCount: 0
@@ -5092,6 +5093,7 @@ MonoBehaviour:
   shortJump: 10
   longJump: 3.5
   canMove: 1
+  canApplyForce: 1
   reboundSpeed: {x: 4, y: 10}
   reboundSpeedJumping: {x: 4, y: 2}
   overlapPosition: {fileID: 850293611381825523}

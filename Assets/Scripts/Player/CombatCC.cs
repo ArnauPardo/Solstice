@@ -22,7 +22,9 @@ public class CombatCC : MonoBehaviour
     [SerializeField] private GameObject attackEffect;
     protected GameObject attackEffectClon;
 
-    [Header("Recibir da�o")]
+    private float recoilForce = 5f; //Fuerza para que el jugador rebote al atacar la parte dura del jefe
+
+    [Header("Recibir dano")]
     //[SerializeField] private GameObject[] hearts;
     [SerializeField] private Sprite emptyLife;
     [SerializeField] private Sprite fullLife;
@@ -242,7 +244,7 @@ public class CombatCC : MonoBehaviour
                 particulasClon = (GameObject)Instantiate(particulasAtacar, col.gameObject.transform.position, Quaternion.identity);
                 attackEffectClon = (GameObject)Instantiate(attackEffect, col.gameObject.transform.position, Quaternion.identity);
                 audioManager.PlaySFX(audioManager.medusaDamage);
-                col.transform.GetComponent<Boss>().TakeDamage(damage);
+                pc.ApplyRecoil(recoilForce);
             }
         }
     }
