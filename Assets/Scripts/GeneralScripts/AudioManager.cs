@@ -22,8 +22,7 @@ public class AudioManager : MonoBehaviour
      [Header("--Medusa--")]
     public AudioClip medusaAttack;
     public AudioClip medusaJump;
-    public AudioClip medusaDamage;
-    public AudioClip medusaDeath;
+    public AudioClip medusaDamage;    
 
     [Header("--Enemigo_Slime--")]
     public AudioClip slimeDamage;
@@ -34,6 +33,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip tankSkill;
     public AudioClip tankDamage;
     public AudioClip tankDeath;
+    public AudioClip tankInvulnerableSound;
 
 
 

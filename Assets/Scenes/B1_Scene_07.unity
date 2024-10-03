@@ -7640,7 +7640,7 @@ MonoBehaviour:
   weaknessTime: 1
   contactDamage: 0
   radioAttack: {fileID: 970377405}
-  radio: 0.9
+  radio: 1.1
   damageAttack: 0
   habilityTime: 5
   isInvulnerable: 0
@@ -7888,6 +7888,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2333563491263446819, guid: ce4e511b306898d4488747b796fe488e, type: 3}
+      propertyPath: tankInvulnerableSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 95184a5f1c1f95e46b6b503f6fc96a89, type: 3}
     - target: {fileID: 6685927460277196142, guid: ce4e511b306898d4488747b796fe488e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.6341248

@@ -237,7 +237,7 @@ public class CombatCC : MonoBehaviour
                     break;
 
                 case GameTags.boss:                    
-                    audioManager.PlaySFX(audioManager.medusaDamage);
+                    audioManager.PlaySFX(audioManager.tankInvulnerableSound);
                     pc.ApplyRecoil(recoilForce);
                     break;
 
