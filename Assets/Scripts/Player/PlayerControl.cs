@@ -127,19 +127,16 @@ public class PlayerControl : MonoBehaviour
             jumpTimer = 0.02f;
         }
 
-        // Mejora de salto, salto largo y corto solo si estamos en el aire
-        if (!isGrounded)
+        //Mejora de salto, salto largo y corto.
+        //El if es para que cuando se detecte que el jugador esta cayendo y aplique la fuerza de la gravedad normal, por eso el valor de saltoCorto es 1
+        if (rb.velocity.y < 0)
         {
-            // Si el jugador está cayendo, aplica la gravedad aumentada para un salto largo
-            if (rb.velocity.y < 0)
-            {
-                rb.velocity += Vector2.up * Physics2D.gravity.y * longJump * Time.deltaTime;
-            }
-            // Si está subiendo pero no mantiene el botón de salto, aplica la gravedad para un salto corto
-            else if (rb.velocity.y > 0 && !Input.GetKey(KeyCode.Space))
-            {
-                rb.velocity += Vector2.up * Physics2D.gravity.y * shortJump * Time.deltaTime;
-            }
+            rb.velocity += Vector2.up * Physics2D.gravity.y * longJump * Time.deltaTime;
+        }
+        //Si estamos saltando pero no estamos pulsando el boton, aplicamos una fuerza mayor en Y para que el jugador deje de subir antes y entre en ca�da
+        else if (rb.velocity.y > 0 && !Input.GetKey(KeyCode.Space))
+        {
+            rb.velocity += Vector2.up * Physics2D.gravity.y * shortJump * Time.deltaTime;
         }
     }
 
