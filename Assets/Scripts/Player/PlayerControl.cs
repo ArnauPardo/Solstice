@@ -18,6 +18,7 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private float jumpForce = 13.5f;
     private int maxJumps = 1;
     [SerializeField] private int jumpCount = 0;
+    [SerializeField] private float timerJumpAnimCorrection;
     public bool isGrounded = false;
     private float jumpTimer;
     public LayerMask groundLayer;
@@ -67,6 +68,12 @@ public class PlayerControl : MonoBehaviour
         if (canApplyForce)
         {
             MovementForces();
+        }
+
+        //Correccion del bug de la animacion de salto mientras andabamos
+        if (isGrounded)
+        {
+            StartCoroutine(JumpAnimCorrection());
         }
     }
 
@@ -138,6 +145,13 @@ public class PlayerControl : MonoBehaviour
         {
             rb.velocity += Vector2.up * Physics2D.gravity.y * shortJump * Time.deltaTime;
         }
+    }
+
+    //Corrutina para cancelar la animacion de salto cuando estamos en el suelto. Esto nos corrige un bug que mantenia la animacion de salto mientras andabamos
+    private IEnumerator JumpAnimCorrection()
+    {
+        yield return new WaitForSeconds(timerJumpAnimCorrection);
+        anim.SetBool(GameTags.playerJumpAnim, false);
     }
 
     private void Movement()

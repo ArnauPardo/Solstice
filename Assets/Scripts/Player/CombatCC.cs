@@ -249,7 +249,6 @@ public class CombatCC : MonoBehaviour
                     break;
 
                 default:
-                    // Si necesitas manejar otros casos o no hacer nada, puedes hacerlo aquí.
                     break;
             }
         }

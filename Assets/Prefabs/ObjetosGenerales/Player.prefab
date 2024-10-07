@@ -5085,6 +5085,7 @@ MonoBehaviour:
   movementSpeed: 5
   jumpForce: 330
   jumpCount: 0
+  timerJumpAnimCorrection: 0.05
   isGrounded: 0
   groundLayer:
     serializedVersion: 2

@@ -7638,10 +7638,10 @@ MonoBehaviour:
   bossHealth: 30
   takeDamageClip: {fileID: 7400000, guid: b4af561cc9072874d9086ace18e8f651, type: 2}
   weaknessTime: 1
-  contactDamage: 0
+  contactDamage: 1
   radioAttack: {fileID: 970377405}
   radio: 1.1
-  damageAttack: 0
+  damageAttack: 2
   habilityTime: 5
   isInvulnerable: 0
   usingHability: 0
