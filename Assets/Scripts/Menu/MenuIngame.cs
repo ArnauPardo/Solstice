@@ -14,7 +14,8 @@ public class MenuInGame : MonoBehaviour
     private AudioSource musicaSource;
     private AudioSource efectosSource;
 
-    private bool juegoPausado = false;
+    public static bool juegoPausado = false;
+    private bool menuOpcionesOpen = false;
 
     void Awake()
     {
@@ -74,7 +75,11 @@ public class MenuInGame : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (menuOpcionesOpen && Input.GetKeyDown(KeyCode.Escape))
+        {
+            Volver();
+        }        
+        else if (!menuOpcionesOpen && Input.GetKeyDown(KeyCode.Escape))
         {
             if (juegoPausado)
             {
@@ -106,6 +111,7 @@ public class MenuInGame : MonoBehaviour
     {
         menu.SetActive(false);
         opciones.SetActive(true);
+        menuOpcionesOpen = true;
     }
 
     // Método para cerrar la escena actual y abrir la escena "Menu"
@@ -115,10 +121,11 @@ public class MenuInGame : MonoBehaviour
         Time.timeScale = 1f;
         SceneManager.LoadScene("Menu"); // Carga la escena llamada "Menu"
     }
-    public void volver()
+    public void Volver()
     {
         opciones.SetActive(false);
         menu.SetActive(true);
+        menuOpcionesOpen = false;
     }
 
     public void ActualizarVolumenMusica(float volumen)

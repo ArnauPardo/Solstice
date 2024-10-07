@@ -59,6 +59,10 @@ public class PlayerControl : MonoBehaviour
 
     void Update()
     {
+        // No detecta el input si el juego está pausado
+        if (MenuInGame.juegoPausado)
+            return;
+
         //Quitar este input al terminar el juego
         if (Input.GetKeyDown(KeyCode.G))
         {

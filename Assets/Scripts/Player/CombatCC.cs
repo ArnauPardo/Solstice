@@ -10,6 +10,7 @@ public class CombatCC : MonoBehaviour
     public static CombatCC Instance;
 
     [Header("Ataque")]
+    public bool canAttack = true;
     [SerializeField] private Transform radioAttack;
 
     [SerializeField] private float radio;
@@ -85,7 +86,11 @@ public class CombatCC : MonoBehaviour
 
     private void Update()
     {
-        if (!Settings.isDead)
+        // No detecta el input si el juego está pausado
+        if (MenuInGame.juegoPausado)
+            return;
+
+        if (!Settings.isDead && canAttack)
         {
             Attack();
         }
