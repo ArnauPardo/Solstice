@@ -61,7 +61,7 @@ public class MenuOpciones : MonoBehaviour
         resolucionDropdown.value = resolucionActual;
         resolucionDropdown.RefreshShownValue();
 
-        // Asignar métodos de control a los sliders
+        //Asignar métodos de control a los sliders
         sliderMusica.onValueChanged.AddListener(ActualizarVolumenMusica);
         sliderEfectos.onValueChanged.AddListener(ActualizarVolumenEfectos);
 
@@ -82,7 +82,7 @@ public class MenuOpciones : MonoBehaviour
                 return i;
             }
         }
-        return 0; // Si no se encuentra la resolución actual, devolver la primera resolución
+        return 0; //Si no se encuentra la resolución actual, devolver la primera resolución
     }
 
     public void Continuar()
@@ -151,7 +151,7 @@ public class MenuOpciones : MonoBehaviour
         Screen.fullScreen = pantallaCompletaActivada;
     }
 
-    // Método para actualizar el volumen de la música
+    //Método para actualizar el volumen de la música
     public void ActualizarVolumenMusica(float volumen)
     {
         if (musicaSource != null)
@@ -160,7 +160,7 @@ public class MenuOpciones : MonoBehaviour
         }
     }
 
-    // Método para actualizar el volumen de los efectos de sonido
+    //Método para actualizar el volumen de los efectos de sonido
     public void ActualizarVolumenEfectos(float volumen)
     {
         if (efectosSource != null)
