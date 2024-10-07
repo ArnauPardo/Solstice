@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
-using UnityEditor.VersionControl;
 
 public class LevelChange_Intro : MonoBehaviour
 {
