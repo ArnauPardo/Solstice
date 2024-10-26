@@ -3037,7 +3037,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16bc8a7da56150f40ac90e5142483af3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pausa: {fileID: 3179539084258560925}
+  pausa: {fileID: 1265744554578893659}
   opciones: {fileID: 7961834159510429457}
   menu: {fileID: 3179539084258560925}
 --- !u!1 &7507651231006470659
