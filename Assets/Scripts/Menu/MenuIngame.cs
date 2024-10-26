@@ -82,11 +82,14 @@ public class MenuInGame : MonoBehaviour
         else if (!menuOpcionesOpen && Input.GetKeyDown(KeyCode.Escape))
         {
             if (juegoPausado)
-            {
+            {                
                 Continuar();
             }
             else
             {
+                //Se muestra el cursor y se desbloquea
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
                 Pausar();
             }
         }
@@ -102,6 +105,9 @@ public class MenuInGame : MonoBehaviour
     // Método para continuar el juego
     public void Continuar()
     {
+        //Se oculta el cursor y se bloquea en medio de la pantalla
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
         pausa.SetActive(false); // Desactiva el menú de pausa
         Time.timeScale = 1f; // Reanuda el tiempo en el juego
         juegoPausado = false;

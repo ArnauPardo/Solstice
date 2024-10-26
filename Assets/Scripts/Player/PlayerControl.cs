@@ -46,6 +46,14 @@ public class PlayerControl : MonoBehaviour
 
     private void Awake() {
         audioManager = GameObject.FindGameObjectWithTag(GameTags.audio).GetComponent<AudioManager>();
+        HideCursor();
+    }
+
+    private void HideCursor()
+    {
+        //Se oculta el cursor y se bloquea en medio de la pantalla
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Start()
