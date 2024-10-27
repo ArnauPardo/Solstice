@@ -33643,6 +33643,10 @@ PrefabInstance:
       propertyPath: _MapaCamara
       value: 
       objectReference: {fileID: 640564405}
+    - target: {fileID: 1265744554578893659, guid: 75f290c020aa37b438d7235cc4178313, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7265052357757268468, guid: 75f290c020aa37b438d7235cc4178313, type: 3}
       propertyPath: m_Name
       value: UI
