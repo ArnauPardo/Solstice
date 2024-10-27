@@ -11,7 +11,7 @@ public class CameraFollow : MonoBehaviour
 
     private Vector3 vel;
 
-    private void Start()
+    private void Awake()
     {
         player = GameObject.FindGameObjectWithTag(GameTags.player).transform;
     }
