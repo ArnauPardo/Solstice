@@ -24,6 +24,10 @@ public class MenuOpciones : MonoBehaviour
 
     private void Awake()
     {
+        //Se muestra el cursor y se desbloquea
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+
         botonContinuar.GetComponent<Button>().interactable = false;
         audioManager = GameObject.FindGameObjectWithTag(GameTags.audio).GetComponent<AudioManager>();
         Settings.newGame = false;
